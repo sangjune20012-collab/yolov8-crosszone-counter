@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Model weights
+weights/
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# Local data files
+data/raw/
+data/**/*.mp4
+data/**/*.avi
+data/**/*.mov
+data/**/*.mkv
+
+# Output videos
+outputs/**/*.mp4
+outputs/**/*.avi
+outputs/**/*.mov
+outputs/**/*.mkv
+
+# Keep folder placeholders
+!data/.gitkeep
+!outputs/.gitkeep
+
+# Old experiment files
+archive_old/
+
+# Ultralytics outputs
+runs/
