@@ -9,6 +9,13 @@ This repository supports two video counting scenarios:
 
 The pipeline uses YOLOv8 for object detection, ByteTrack for object tracking in line crossing counting, and Supervision for line and polygon zone visualization.
 
+
+## Demo
+
+<video src="outputs/vehicle_line/vehicles_result_Line_Cross_Counting_ShortLine.mp4" controls width="100%"></video>
+
+[Watch demo video](outputs/vehicle_line/vehicles_result_Line_Cross_Counting_ShortLine.mp4)
+
 ## Features
 
 * YOLOv8-based object detection
