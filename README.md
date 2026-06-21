@@ -9,9 +9,6 @@ This repository supports two video counting scenarios:
 
 The pipeline uses YOLOv8 for object detection, ByteTrack for object tracking in line crossing counting, and Supervision for line and polygon zone visualization.
 
-
-
-
 ## Demo
 
 ![Vehicle Line Crossing Demo](assets/vehicle_line_demo.gif)
@@ -25,34 +22,45 @@ The pipeline uses YOLOv8 for object detection, ByteTrack for object tracking in 
 * Line crossing counting
 * Polygon zone counting
 * First-frame extraction for zone configuration
-* Local video input and output management
+* Raw video and result video management with Git LFS
 
 ## Project Structure
 
 ```text
 .
+├── assets/
+│   ├── mall_first_frame.jpg
+│   └── vehicle_line_demo.gif
+├── data/
+│   └── raw/
+│       ├── mall.mp4
+│       ├── SampleVideo.mp4
+│       └── vehicles_Line_Cross_Counting.mp4
+├── outputs/
+│   ├── mall_polygon/
+│   │   ├── mall-result-only bbox.mp4
+│   │   ├── mall-result1_rectangle_YOLO26.mp4
+│   │   ├── mall-result1_rectangle_YOLO8.mp4
+│   │   └── mall-result1_triangle_YOLO8.mp4
+│   ├── sample_line/
+│   │   ├── SampleVideo_result1_Line_Crossing_Counting.mp4
+│   │   └── SampleVideo_result2_Line Crossing Counting.mp4
+│   └── vehicle_line/
+│       ├── vehicles_result2_Line_Cross_Counting_LongLine.mp4
+│       └── vehicles_result_Line_Cross_Counting_ShortLine.mp4
 ├── src/
 │   ├── count_line_crossing.py
 │   ├── count_polygon_zone.py
 │   └── extract_first_frame.py
-├── assets/
-│   └── mall_first_frame.jpg
-├── data/
-│   └── .gitkeep
-├── outputs/
-│   └── .gitkeep
-├── requirements.txt
+├── .gitattributes
 ├── .gitignore
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ## Dataset
 
-Large video files are not included in this repository.
-
-Place input videos under `data/raw/`.
-
-Expected local files:
+Raw input videos are stored under `data/raw/`.
 
 ```text
 data/raw/mall.mp4
@@ -60,16 +68,20 @@ data/raw/SampleVideo.mp4
 data/raw/vehicles_Line_Cross_Counting.mp4
 ```
 
-## Model Weights
+## Results
 
-YOLO model weight files are not included in this repository.
-
-Place model weights under `weights/`.
-
-Expected local file:
+Result videos are stored under `outputs/`.
 
 ```text
-weights/yolov8s.pt
+outputs/mall_polygon/
+outputs/sample_line/
+outputs/vehicle_line/
+```
+
+The main demo video is:
+
+```text
+outputs/vehicle_line/vehicles_result_Line_Cross_Counting_ShortLine.mp4
 ```
 
 ## Installation
@@ -86,7 +98,7 @@ pip install -r requirements.txt
 python src/count_polygon_zone.py \
   --source data/raw/mall.mp4 \
   --output outputs/mall_polygon/mall_polygon_yolov8.mp4 \
-  --model weights/yolov8s.pt \
+  --model yolov8s.pt \
   --classes person \
   --polygon 1310 2142 1906 1270 2374 1258 3494 2150 \
   --output-width 1920 \
@@ -100,7 +112,7 @@ python src/count_polygon_zone.py \
 python src/count_line_crossing.py \
   --source data/raw/SampleVideo.mp4 \
   --output outputs/sample_line/sample_line_yolov8.mp4 \
-  --model weights/yolov8s.pt \
+  --model yolov8s.pt \
   --classes car motorcycle bus truck \
   --line 200 540 1700 540 \
   --imgsz 1280
@@ -112,7 +124,7 @@ python src/count_line_crossing.py \
 python src/count_line_crossing.py \
   --source data/raw/vehicles_Line_Cross_Counting.mp4 \
   --output outputs/vehicle_line/vehicle_line_yolov8.mp4 \
-  --model weights/yolov8s.pt \
+  --model yolov8s.pt \
   --classes car motorcycle bus truck \
   --line 0 1500 3840 1500 \
   --imgsz 1280
@@ -128,9 +140,10 @@ python src/count_line_crossing.py \
 
 ## Notes
 
-* Input videos are excluded from Git tracking.
-* Output videos are excluded from Git tracking.
-* Model weights are excluded from Git tracking.
+* Raw videos and result videos are included in this repository using Git LFS.
+* Model weights are not included in this repository.
+* The YOLOv8 model can be loaded using `yolov8s.pt`.
 * Use `extract_first_frame.py` to extract a reference frame before setting line or polygon coordinates.
 * The line and polygon coordinates may need to be adjusted depending on the input video resolution.
+
 
